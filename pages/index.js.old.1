@@ -1,0 +1,25 @@
+import { image_search, image_search_generator } from './ddg_image_utils/api';
+
+export default function Home() {
+	/*function print(results) {
+		results.forEach((element) => {
+			console.log(element);
+		});
+	}*/
+
+	//image search completes all iterations and returns the complete results at once
+	image_search({ query: 'kecske gatyában', moderate: true }).then((results) => {
+		console.log(results[1]);
+		console.log('MARCI');
+	});
+
+	/*for await (let resultSet of image_search_generator({
+		query: 'naruto',
+		moderate: true,
+		iterations: 4,
+	})) {
+		print(resultSet);
+	}*/
+
+	return <>Marci</>;
+}

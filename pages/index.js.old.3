@@ -8,11 +8,16 @@ export default function Home() {
 	const [result, setResult] = useState([]);
 	const options = {
 		method: 'GET',
-		url: 'https://api.giphy.com/v1/gifs/search',
+		url: 'https://contextualwebsearch-websearch-v1.p.rapidapi.com/api/Search/ImageSearchAPI',
 		params: {
-			api_key: 'FAyl4Z3hiOFlQkOC92dy0WGH8OFUZcVM',
 			q: input,
-			limit: 50,
+			pageNumber: '1',
+			pageSize: '100',
+			autoCorrect: 'false',
+		},
+		headers: {
+			'X-RapidAPI-Host': 'contextualwebsearch-websearch-v1.p.rapidapi.com',
+			'X-RapidAPI-Key': '2299511712msh4a38501eb0a83cep116ef6jsne9ab0af95309',
 		},
 	};
 
@@ -29,8 +34,8 @@ export default function Home() {
 					axios
 						.request(options)
 						.then(function (response) {
-							console.log(response.data.data);
-							setResult(response.data.data);
+							console.log(response.data);
+							setResult(response.data.value);
 						})
 						.catch(function (error) {
 							console.error(error);
@@ -40,19 +45,11 @@ export default function Home() {
 				Click me
 			</button>
 			<br></br>
-
 			{result.map((image, idx) => {
-				return (
-					<iframe
-						key={idx}
-						src={image.embed_url}
-						width='480'
-						height='360'
-						frameBorder='0'
-						className='giphy-embed'
-						allowFullScreen
-					></iframe>
-				);
+				if (image.url.slice(image.url.length - 3) === '.gif' || true) {
+					console.log(image.url);
+					return <img src={image.url} alt={image.title} id={idx} width='25%' />;
+				}
 			})}
 		</>
 	);
